@@ -11,7 +11,11 @@ string ecSpDir = Path.Combine(homedir, ".everycom", "start-process-ec");
 void RunCmd(string[] cmd)
 {
     var fileName = cmd[0];
-    using Process proc = Process.Start(fileName, new ArraySegment<string>(cmd, 1, cmd.Length - 1));
+    var cmdExceptFirst = new ArraySegment<string>(cmd, 1, cmd.Length - 1);
+    List<string> cmdargs = new();
+    cmdargs.AddRange(cmdExceptFirst);
+    cmdargs.AddRange(args);
+    using Process proc = Process.Start(fileName, cmdargs);
 }
 void UseTxt(string cfgfile)
 {
